@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:listview="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+             xmlns:helpers="clr-namespace:EXOApp.Helpers"
+             xmlns:models="clr-namespace:EXOApp.Models"
+             xmlns:accordian="clr-namespace:Syncfusion.Maui.Accordion;assembly=Syncfusion.Maui.Expander"
+             x:Class="EXOApp.SupportPage">
+    <ContentPage.BindingContext>
+        <models:SupportViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <Grid Margin="0,0,0,0" Padding="2,2,2,2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.2*" />
+                <ColumnDefinition Width="0.8*" />
+            </Grid.ColumnDefinitions>
+            <Border Grid.Column="1">
+                <accordian:SfAccordion HeaderIconPosition="Start"  BindableLayout.ItemsSource="{Binding ViewedHelp}" ExpandMode="MultipleOrNone"  ItemSpacing="20">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <accordian:AccordionItem HeaderBackground="{StaticResource AccentColour}" HeaderIconColor="{StaticResource AccentColour}" >
+                                <accordian:AccordionItem.Header>
+                                    <Label Text="{Binding Title}" FontSize="Title" TextColor="{StaticResource PrimaryColour}"/>
+                                </accordian:AccordionItem.Header>
+                                <accordian:AccordionItem.Content>
+                                    <Grid BackgroundColor="{StaticResource AccentColour}">
+                                        <Border BackgroundColor="White">
+                                            <Label Text="{Binding Description}" FontSize="Medium"/>
+                                        </Border>
+                                    </Grid>
+                                </accordian:AccordionItem.Content>
+                            </accordian:AccordionItem>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </accordian:SfAccordion>
+            </Border>
+            <Border Grid.Column="1" BackgroundColor="White" IsVisible="false" x:Name="transition"/>
+            <Border Grid.Column="0" Grid.Row="0" BackgroundColor="{StaticResource PrimaryColour}"  Padding="0,0,0,0" StrokeShape="RoundRectangle 20" Stroke="Transparent">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.1*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="0.1*"/>
+                    </Grid.RowDefinitions>
+                    <Image Grid.Row="0" Source="{helpers:ImageResource Assets.Images.Logos.LogoWhite.png}" Aspect="AspectFit"/>
+                    <listview:SfListView Grid.Row="1"  ItemsSource="{Binding SideList}" SelectedItem="{Binding CurrentItem}" SelectionChangedCommand="{Binding settingsChangeCommand}" BackgroundColor="Transparent" SelectionBackground="Transparent" AutoFitMode="DynamicHeight"  ItemBorderColor="Transparent">
+                        <listview:SfListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <ViewCell.View>
+                                        <Grid>
+                                            <Image Source="{helpers:ImageResource Assets.Images.SideBar.selectedSetting.png}" Opacity="0" IsVisible="true" Aspect="AspectFill" Margin="0,0,0,0"/>
+                                            <Image Source="{helpers:ImageResource Assets.Images.SideBar.selectedSetting.png}" IsVisible="{Binding IsEnabled}" Aspect="AspectFill" Margin="0,0,0,0"/>
+                                            <Label Text="{Binding Title}" TextColor="{Binding TextColor}" VerticalOptions="Center" HorizontalOptions="Start" FontSize="Title" Padding="15,0,0,0"/>
+                                        </Grid>
+                                    </ViewCell.View>
+                                </ViewCell>
+                            </DataTemplate>
+                        </listview:SfListView.ItemTemplate>
+                    </listview:SfListView>
+                    <Button Grid.Row="2" Text="Back" Command="{Binding exitCommand}" BackgroundColor="White" TextColor="Black" Margin="5,5,5,5"/>
+                </Grid>
+            </Border>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

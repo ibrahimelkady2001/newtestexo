@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:listview="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+             xmlns:range="clr-namespace:Syncfusion.Maui.Sliders;assembly=Syncfusion.Maui.Sliders"
+             xmlns:button="http://schemas.syncfusion.com/maui"
+             xmlns:converters="clr-namespace:EXOApp.Converters"
+             xmlns:helpers="clr-namespace:EXOApp.Helpers"
+             xmlns:models="clr-namespace:EXOApp.Models"
+             xmlns:xct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"             
+             x:Class="EXOApp.SettingsPageV2">
+    <ContentPage.BindingContext>
+        <models:SettingsViewModelV2/>
+    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:IntToBoolConverter x:Key="IntToBoolConverter" />
+            <xct:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid Margin="0,0,0,0" Padding="2,2,2,2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.2*" />
+                <ColumnDefinition Width="0.8*" />
+            </Grid.ColumnDefinitions>
+
+            <Frame Grid.Column="1">
+                <Grid Padding="0" Margin="0">
+                    <StackLayout IsVisible="{Binding GlobalOpen}">
+                        <Label Text="Settings on this page affect all EXO Systems" FontSize="Large"/>
+                        <Label Text=""/>
+                        <Label Text="Temperature Units" FontSize="Large"/>
+                        <Label Text="Switch between degrees Celsius and degrees farenheit" FontSize="Small"/>
+                        <Grid>
+                            <Frame BackgroundColor="White">
+                                <button:SfSegmentedControl ItemsSource="{Binding TemperatureSettingList}" SelectedIndex="{Binding SelectedTemperature}" x:Name="temperatureControl" VisibleSegmentsCount="2"/>
+                            </Frame>
+                            <StackLayout Grid.Column="2" Orientation="Horizontal" HorizontalOptions="End">
+                                <Button Text="Confirm Change" Padding="20,5,20,5" Command="{Binding otherConfirmCommand}"  CommandParameter="Temperature" VerticalOptions="Center"/>
+                            </StackLayout>
+                        </Grid>
+
+                        <Label Text="Log Float Sessions" FontSize="Large"/>
+                        <Label Text="Enable logging of float sessions. Turning this off will prevent float session infomation from being saved" FontSize="Small"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.2*"/>
+                                <ColumnDefinition Width="0.8*"/>
+                            </Grid.ColumnDefinitions>
+                            <Frame BackgroundColor="White">
+                                <button:SfSwitch Grid.Column="0" x:Name="loggingControl" IsOn="{Binding LoggingOn}"/>
+                            </Frame>
+                            <StackLayout Grid.Column="2" HorizontalOptions="End">
+                                <Button Text="Confirm Change" Padding="20,5,20,5" Command="{Binding otherConfirmCommand}"  CommandParameter="Logging" />
+                            </StackLayout>
+                        </Grid>
+                        
+                        <Label Text="Use Per Track Music Volumes" FontSize="Large"/>
+                        <Label Text="Use Music Volumes set within the Music Manager. Enabling this settings will bypass the Volume set in the Floating settings" FontSize="Small"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.2*"/>
+                                <ColumnDefinition Width="0.8*"/>
+                            </Grid.ColumnDefinitions>
+                            <Frame BackgroundColor="White">
+                                <button:SfSwitch Grid.Column="0" IsOn="{Binding PerTrackVolume}"/>
+                            </Frame>
+                            <StackLayout Grid.Column="2" HorizontalOptions="End">
+                                <Button Text="Confirm Change" Padding="20,5,20,5" Command="{Binding otherConfirmCommand}"  CommandParameter="Music" />
+                            </StackLayout>
+                        </Grid>
+                        
+                    </StackLayout>
+                    <StackLayout IsVisible="{Binding FilterUVOpen}">
+                        <Label Text="Reset the filter and UV alerts for the current EXO Pod" FontSize="Large"/>
+                        <Label Text=""/>
+                        <Label Text="Filter Alert" FontSize="Large"/>
+                        <Label Text="Reset the filter alert here after changing your EXO's filters" FontSize="Small"/>
+                        <Label Text="{Binding FilterText}" FontSize="Small"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.2*"/>
+                                <ColumnDefinition Width="0.8*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackLayout Grid.Column="1" HorizontalOptions="EndAndExpand">
+                                <Button Text="Reset Filter Alert" Padding="20,5,20,5" Command="{Binding otherConfirmCommand}" CommandParameter="Filter" HorizontalOptions="FillAndExpand"/>
+                            </StackLayout>
+                        </Grid>
+
+                        <Label Text="UV Alert" FontSize="Large"/>
+                        <Label Text="Reset the UV alert here after changing your EXO's UV" FontSize="Small"/>
+                        <Label Text="{Binding UVtext}" FontSize="Small"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.2*"/>
+                                <ColumnDefinition Width="0.8*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackLayout Grid.Column="1" HorizontalOptions="EndAndExpand">
+                                <Button Text="Reset UV Alert" Padding="20,5,20,5" Command="{Binding otherConfirmCommand}"  CommandParameter="UV"/>
+                            </StackLayout>
+                        </Grid>
+                    </StackLayout>
+
+                    <listview:SfListView ItemsSource="{Binding ViewedSettings}" BackgroundColor="Transparent" SelectionMode="None" AutoFitMode="DynamicHeight" IsVisible="{Binding MainOpen}">
+                    <listview:SfListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <ViewCell.View>
+                                    <Grid>
+                                        <Frame>
+                                            <StackLayout>
+                                                <Label Text="{Binding title}" FontSize="Large"/>
+                                                <Label Text="{Binding description}" FontSize="Small"/>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="0.2*"/>
+                                                        <ColumnDefinition Width="0.8*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Frame Grid.Column="0" BackgroundColor="White" Padding="0,0,0,0" Margin="0,0,0,0" IsVisible="{Binding numberControl}">
+                                                        <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
+                                                            <Label Text="{Binding CurrentValue}" VerticalOptions="Center" />
+                                                            <Label Text="{Binding units}" VerticalOptions="Center"/>
+                                                        </StackLayout>
+                                                    </Frame>
+                                                    <Frame BackgroundColor="White" IsVisible="{Binding boolControl}">
+                                                        <button:SfSwitch Grid.Column="0" IsOn="{Binding BoolValue, Converter={StaticResource IntToBoolConverter}}"/>
+                                                    </Frame>
+                                                    <range:SfRangeSlider Grid.Column="1" 
+                       IsVisible="{Binding numberControl}" 
+                       Minimum="{Binding minValue}" 
+                       Maximum="{Binding maxValue}" 
+                       RangeStart="{Binding CurrentValue}"
+                       RangeEnd="{Binding maxValue}"
+                       StepSize="{Binding increment}"
+                       ShowLabels="True"
+                       ShowTicks="False"/>
+                                                </Grid>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="1.5*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <StackLayout Grid.Column="0" HorizontalOptions="Start">
+                                                        <Button Text="Default" Padding="20,5,20,5" Command="{Binding defaultCommand}"/>
+                                                    </StackLayout>
+                                                    <StackLayout Grid.Column="2" HorizontalOptions="End">
+                                                        <Button Text="Confirm Change" Padding="20,5,20,5" Command="{Binding confirmChangesCommand}"/>
+                                                    </StackLayout>
+                                                </Grid>
+                                            </StackLayout>
+                                        </Frame>
+                                    </Grid>
+                                </ViewCell.View>
+                            </ViewCell>
+                        </DataTemplate>
+                    </listview:SfListView.ItemTemplate>
+                </listview:SfListView>
+                </Grid>
+            </Frame>
+            <Frame Grid.Column="1" BackgroundColor="White" x:Name="transition" IsVisible="false"/>
+            <Frame Grid.Column="0" Grid.Row="0" BackgroundColor="{StaticResource PrimaryColour}"  Padding="0,0,0,0" CornerRadius="20" BorderColor="Transparent">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.1*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="0.1*"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.1*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackLayout Grid.Column="1" Orientation="Horizontal">
+                            <Image Source="{helpers:ImageResource Assets.Images.Logos.LogoWhite.png}" Aspect="AspectFit"/>
+                            <Label Text="{Binding OrbitNumber}" FontSize="Title" VerticalOptions="Center" TextColor="White"/>
+                        </StackLayout>
+                    </Grid>
+                    <listview:SfListView Grid.Row="1"  ItemsSource="{Binding SideBar}" SelectedItem="{Binding CurrentSetting}" SelectionChangedCommand="{Binding settingsChangeCommand}" BackgroundColor="Transparent" SelectionBackground="Transparent" AutoFitMode="DynamicHeight" ItemBorderColor="Transparent">
+                        <listview:SfListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <ViewCell.View>
+                                        <Grid>
+                                            <Image Source="{helpers:ImageResource Assets.Images.SideBar.selectedSetting.png}" Opacity="0" IsVisible="true" Aspect="AspectFill" Margin="0,0,0,0"/>
+                                            <Image Source="{helpers:ImageResource Assets.Images.SideBar.selectedSetting.png}" IsVisible="{Binding IsEnabled}" Aspect="AspectFill" Margin="0,0,0,0"/>
+                                            <Label Text="{Binding Name}" TextColor="{Binding TextColor}" VerticalOptions="Center" HorizontalOptions="Start" FontSize="Title" Padding="15,0,0,0"/>
+                                        </Grid>
+                                    </ViewCell.View>
+                                </ViewCell>
+                            </DataTemplate>
+                        </listview:SfListView.ItemTemplate>
+                    </listview:SfListView>
+                    
+                    <Button Grid.Row="2" Text="Back" Command="{Binding exitCommand}" BackgroundColor="White" TextColor="Black" Margin="5,5,5,5"/>
+                </Grid>
+            </Frame>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

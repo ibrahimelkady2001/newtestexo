@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EXOApp.MainPage"
+             xmlns:helpers="clr-namespace:EXOApp.Helpers"
+             xmlns:syncmaskededit="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+       	     xmlns:syncbuttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"    
+             xmlns:busyindicator="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+
+             BackgroundColor="{StaticResource SecondaryColour}">
+             <ScrollView Orientation="Both">
+    <Border Padding="0,0,0,0">
+        <Border BackgroundColor="White" Padding="0,0,0,0">
+            <Grid>
+                <StackLayout  VerticalOptions="Center" Padding="40">
+                    <Image WidthRequest="400" Source="{helpers:ImageResource Assets.Images.Logos.Logo.png}"/>
+                    <Border HorizontalOptions="Center" WidthRequest="600">
+                        <StackLayout>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.3*"/>
+                                    <ColumnDefinition Width="0.7*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Label Text="User ID" HorizontalOptions="Start"  VerticalOptions="Center"  FontSize="Medium"/>
+                                <Border Grid.Column="1" Padding="0" Margin="10" StrokeShape="RoundRectangle 20" BackgroundColor="White" HorizontalOptions="FillAndExpand">
+                                    <syncmaskededit:SfMaskedEntry ShowBorder="False" Stroke="Transparent" BackgroundColor="Transparent" x:Name="userName_Entry" SelectAllOnFocus="True"  VerticalOptions="Center" Margin="10" />
+                                </Border>
+                                <Label Grid.Row="1" Text="Password" HorizontalOptions="Start" VerticalOptions="Center" FontSize="Medium"/>
+                                <Border Grid.Column="1" Grid.Row="1" Padding="0" Margin="10" StrokeShape="RoundRectangle 20" BackgroundColor="White" HorizontalOptions="FillAndExpand">
+                                    <syncmaskededit:SfMaskedEntry ShowBorder="False" Stroke="Transparent" BackgroundColor="Transparent" x:Name="password_Entry" PasswordChar="&#x2022;"  ReturnType="Next" SelectAllOnFocus="True"    VerticalOptions="Center" Margin="10"/>
+                                </Border>
+                                <StackLayout Grid.Column="0" Grid.Row="2" Orientation="Horizontal" HorizontalOptions="Start" VerticalOptions="Center">
+                                    <Label Text="Scan For New Pods"/>
+                                </StackLayout>
+                                <Grid Grid.Column="1" Grid.Row="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="0.25*"/>
+                                        <ColumnDefinition Width="0.75*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <syncbuttons:SfCheckBox Grid.Column="0" x:Name="fast_login" IsChecked="False" HorizontalOptions="Center" VerticalOptions="Center" Scale="2.2"   UncheckedColor="White"/>
+                                    <syncbuttons:SfButton Grid.Column="1" Grid.Row="0" Text="Login" HorizontalOptions="Center" WidthRequest="300" x:Name="login_button" Clicked="loginButtonClick"  FontSize="25">
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup x:Name="CommonStates">
+                                                <VisualState x:Name="Normal">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="Background" Value="{StaticResource PrimaryColour}"/>
+                                                        <Setter Property="TextColor" Value="{StaticResource SecondaryColour}"/>
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                                <VisualState x:Name="Hovered">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="Background" Value="{StaticResource SecondaryColour}"/>
+                                                        <Setter Property="TextColor" Value="{StaticResource PrimaryColour}"/>
+                                                        <Setter Property="Stroke" Value="{StaticResource SecondaryColour}"/>
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+                                    </syncbuttons:SfButton>
+                                </Grid>
+                            </Grid>
+                        </StackLayout>
+                    </Border>
+                    <Image WidthRequest="150" Source="{helpers:ImageResource Assets.Images.Logos.WellnessLogo.png}"/>
+                </StackLayout>
+                <syncbuttons:SfButton x:Name="QuitButton" Text="Quit" HorizontalOptions="End" VerticalOptions="Start" WidthRequest="140" Clicked="quitButtonClick"  FontSize="25" Margin="10">
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="Background" Value="{StaticResource PrimaryColour}"/>
+                                    <Setter Property="TextColor" Value="{StaticResource SecondaryColour}"/>
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Hovered">
+                                <VisualState.Setters>
+                                    <Setter Property="Background" Value="{StaticResource SecondaryColour}"/>
+                                    <Setter Property="TextColor" Value="{StaticResource PrimaryColour}"/>
+                                    <Setter Property="Stroke" Value="{StaticResource SecondaryColour}"/>
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateManager.VisualStateGroups>
+                </syncbuttons:SfButton>
+                <syncbuttons:SfButton x:Name="SupportButton" Text="Need Help?" HorizontalOptions="End" VerticalOptions="End" WidthRequest="180" Clicked="supportButtonClick"  FontSize="25" Margin="10">
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="Background" Value="{StaticResource PrimaryColour}"/>
+                                    <Setter Property="TextColor" Value="{StaticResource SecondaryColour}"/>
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Hovered">
+                                <VisualState.Setters>
+                                    <Setter Property="Background" Value="{StaticResource SecondaryColour}"/>
+                                    <Setter Property="TextColor" Value="{StaticResource PrimaryColour}"/>
+                                    <Setter Property="Stroke" Value="{StaticResource SecondaryColour}"/>
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateManager.VisualStateGroups>
+                </syncbuttons:SfButton>
+                <Label Margin="15,0,0,5" HorizontalOptions="Start" VerticalOptions="Start" Text="1.2.2.3" TextColor="Gray"/>
+                <StackLayout VerticalOptions="End" HorizontalOptions="Start">
+                    <Label Margin="15,0,0,5" HorizontalOptions="Start" VerticalOptions="End" TextColor="Red" IsVisible="False" x:Name="InternetConnection" Text="No Internet Connection Detected, Remote Support is only available if connected to the internet."/>
+                    <Label Margin="15,0,0,5" HorizontalOptions="Start" VerticalOptions="End" x:Name="ipAddress" TextColor="Gray"/>
+                </StackLayout>
+                <busyindicator:SfBusyIndicator HorizontalOptions="Center" VerticalOptions="End" AnimationType="HorizontalPulsingBox" x:Name="busyIndicator" IsRunning="False"/>
+            </Grid>
+        </Border>
+    </Border>
+    </ScrollView>
+</ContentPage>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:EXOApp.Models"
+             x:Class="EXOApp.Maintenance">
+    <!--Pages can be added as references or inline-->
+    <TabbedPage.BindingContext>
+        <models:MaintenanceViewModel/>
+    </TabbedPage.BindingContext>
+    <ContentPage Title="Fill and Empty Settings">
+        <StackLayout>
+            <Label Text="Fill Time" FontSize="40"/>
+            <Label Text="The maximum amount of time it take to fill the Pod. &#x0a;Please check the solution level before adjusting this setting. &#x0a;This prevents the pump over-running if the Reservoir tanks are overfilled"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row ="1" Grid.Column="0" HorizontalOptions="Start">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="{Binding FillString}"/>
+                            <Span Text=" Seconds"/>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Stepper Grid.Column="1" Maximum="600" Minimum ="150" Value="{Binding Fill}" HorizontalOptions="FillAndExpand"/>
+                <Slider Grid.Column="2" Maximum="600" Grid.ColumnSpan="2" Minimum ="150" Value="{Binding Fill}" WidthRequest="300" HorizontalOptions="FillAndExpand"/>
+                <Button Grid.Row ="1" Grid.Column="2" Text="Confirm Change" HorizontalOptions="Center" Command="{Binding ComfirmationCommand}" CommandParameter="Fill"/>
+                <Button Grid.Row ="1" Grid.Column="1" Text="Default" HorizontalOptions="Center" Command="{Binding ComfirmationCommand}" CommandParameter="Fill"/>
+            </Grid>
+
+            <Label Text=""/>
+            <Label Text="Empty Time" FontSize="40"/>
+            <Label Text="The amount of time the pump will run to empty the Pod. &#x0a;Please check the solution level before adjusting this setting.&#x0a;Failure to set this correctly will lead to solution not being drained from the Pod"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.6*"/>
+                    <ColumnDefinition Width="0.5*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" HorizontalOptions="Start">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="{Binding FillString}"/>
+                            <Span Text=" Seconds"/>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Stepper Grid.Column="1" Maximum="600" Minimum ="150" Value="{Binding Fill}" HorizontalOptions="FillAndExpand"/>
+                <Slider Grid.Column="2" Maximum="600" Minimum ="150" Value="{Binding Fill}" WidthRequest="300" HorizontalOptions="FillAndExpand"/>
+                <Button Grid.Column="3" Text="Confirm Change" HorizontalOptions="Center" Command="{Binding ComfirmationCommand}" CommandParameter="Fill"/>
+            </Grid>
+        </StackLayout>
+    </ContentPage>
+    <ContentPage Title="Temperature and Standby Settings">
+        <StackLayout>
+            <Label Text="Water Temperature"/>
+            <Label Text="The temperature that EXO System will maintain the temperature at.&#x0a; Please check that the water temperature is acceptable before floating"/>
+            <Slider/>
+            <Label Text=""/>
+            <Label Text="Standby Speed"/>
+            <Label Text="The speed the pump circulates solution round the system. Increasing the speed will lead to higher temperature recovery"/>
+
+            <Picker ItemsSource="{Binding StandbySpeedList}" SelectedIndex="{Binding StandbySpeed}"/>
+        </StackLayout>
+    </ContentPage>
+    <ContentPage Title="Skimmer Settings">
+        <StackLayout>
+            <Label Text="Skimmer Fill Time"/>
+            <Label Text="The time spent pumping solution into the EXO. &#x0a;This should be calibrated to fill the EXO to 2cm"/>
+            <Slider/>
+            <Label Text=""/>
+            <Label Text="Skimmer Run Time"/>
+            <Label Text="The time skimmer will run for. &#x0a;Set this to the time you require to clean the EXO"/>
+            <Slider/>
+        </StackLayout>
+    </ContentPage>
+    <ContentPage Title="Floating Settings">
+        <StackLayout>
+            <Label Text="Music Volume"/>
+            <Label Text="The volume of the music played in the EXO &#x0a;Check that the volume is at an acceptable level before floating"/>
+            <Slider/>
+            <Label Text=""/>
+            <Label Text="Heated Float Speed"/>
+            <Label Text="The speed at which water is ciruclated round the EXO during heated float mode. This should be set as low as possible without stopping flow through the EXO"/>
+            <Slider/>
+        </StackLayout>
+    </ContentPage>
+    <ContentPage Title="Lighting Settings">
+        <StackLayout>
+            <Label Text="Night Mode"/>
+            <Label Text="Night Mode turns the EXO's lighting off during specified hours of the day. Ensure no floats take place during Night Mode"/>
+            <Slider/>
+            <Label Text="Night Mode Start Time"/>
+            <Label Text="Night Mode End Time"/>
+            <Slider/>
+        </StackLayout>
+    </ContentPage>
+    <ContentPage Title="EXO Platinum">
+        <StackLayout>
+            <Label Text="Activation Status"/>
+            <Label Text="Enter Code"/>
+            <Label Text="Enter Email"/>
+            <Slider/>
+        </StackLayout>
+    </ContentPage>
+</TabbedPage>

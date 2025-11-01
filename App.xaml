@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EXOApp.App"
+             xmlns:syncmaskededit="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+             xmlns:syncbuttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"           
+             xmlns:syncrange="clr-namespace:Syncfusion.Maui.Sliders;assembly=Syncfusion.Maui.Sliders"
+             xmlns:numerictext="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+
+>
+    <Application.Resources>
+
+
+     
+  <Color x:Key="PrimaryColour">#1c3e70</Color>
+        <Color x:Key="SecondaryColour">#ffffff</Color>
+        <Color x:Key="TertiaryColour">#494949</Color>
+        <Color x:Key="TextColour">#171717</Color>
+        <Color x:Key="AccentColour">#deebf7</Color>
+
+        <Style TargetType="Button">
+            <Setter Property="FontFamily" Value="Poppins"/>
+            <Setter Property="FontSize" Value="Medium" />
+            <Setter Property="Background" Value="{StaticResource PrimaryColour}" />
+            <Setter Property="TextColor" Value="{StaticResource SecondaryColour}" />
+            <Setter Property="CornerRadius" Value="17" />
+            <Setter Property="BorderWidth" Value="2"/>
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="TextColor" Value="{StaticResource SecondaryColour}"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Disabled">
+                            <VisualState.Setters>
+                                <Setter Property="TextColor" Value="White"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+
+        <Style TargetType="syncbuttons:SfButton">
+            <Setter Property="FontFamily" Value="Poppins"/>
+            <Setter Property="FontSize" Value="Medium" />
+            <Setter Property="Background" Value="{StaticResource PrimaryColour}" />
+            <Setter Property="TextColor" Value="{StaticResource SecondaryColour}" />
+            <Setter Property="CornerRadius" Value="25" />
+        </Style>
+
+        <Style TargetType="Label">
+            <Setter Property="FontFamily" Value="Poppins"/>
+            <Setter Property="FontSize" Value="Medium"/>
+            <Setter Property="TextColor" Value="{StaticResource TextColour}" />
+        </Style>
+
+        <Style TargetType="Entry">
+            <Setter Property="FontFamily" Value="Poppins"/>
+            <Setter Property="FontSize" Value="Medium"/>
+            <Setter Property="TextColor" Value="{StaticResource TextColour}" />
+        </Style>
+
+        <Style TargetType="Slider">
+            <Setter Property="MinimumTrackColor" Value="{StaticResource AccentColour}"/>
+            <Setter Property="MaximumTrackColor" Value="{StaticResource TertiaryColour}"/>
+        </Style>
+
+        <Style TargetType="Picker">
+            <Setter Property="FontFamily" Value="Poppins"/>
+            <Setter Property="Background" Value="White"/>
+        </Style>
+
+
+
+        <Style TargetType="Stepper">
+            <Setter Property="Background" Value="{StaticResource AccentColour}"/>
+            <Setter Property="Scale" Value="1.3"/>
+        </Style>
+
+        <Style TargetType="Border">
+            <Setter Property="BackgroundColor" Value="{StaticResource AccentColour}"/>
+            <Setter Property="StrokeShape" Value="RoundRectangle 25"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="20,20,20,20"/>
+        </Style>
+        
+        <Style TargetType="syncmaskededit:SfMaskedEntry">
+            <Setter Property="FontFamily" Value="Poppins"/>
+        </Style>
+
+        <Style TargetType="syncbuttons:SfCheckBox">
+            <Setter Property="CornerRadius" Value="6"/>
+        </Style>
+
+        <Style TargetType="syncrange:SfRangeSlider">
+            <Setter Property="ThumbStyle" >
+                <Setter.Value>
+                       <syncrange:SliderThumbStyle  Radius="2" Fill = "{StaticResource PrimaryColour}" />
+                </Setter.Value>
+
+            </Setter>
+               <Setter Property="TrackStyle" >
+        <Setter.Value>
+
+      
+        <syncrange:SliderTrackStyle ActiveFill="Blue" InactiveSize="10" ActiveSize="10" InactiveFill = "White" />
+ 
+  </Setter.Value>
+
+            </Setter>
+         
+          
+         
+           
+        
+    
+        </Style>
+        
+        <Style TargetType="numerictext:SfNumericEntry">
+            <Setter Property="FontFamily" Value="Poppins"/>
+            <Setter Property="FontSize" Value="Small"/>
+        </Style>
+
+        <Style TargetType="syncbuttons:SfSegmentedControl">
+            <Setter Property="TextStyle">
+                 <syncbuttons:SegmentTextStyle  FontFamily="Poppins" />
+            </Setter>
+           
+            <Setter Property="CornerRadius" Value="15"/>
+        </Style>
+
+    </Application.Resources>
+</Application>

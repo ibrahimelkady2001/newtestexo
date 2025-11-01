@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:xct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:listview="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+             xmlns:helpers="clr-namespace:EXOApp.Helpers"
+             xmlns:converters="clr-namespace:EXOApp.Converters"
+             xmlns:busyindicator="http://schemas.syncfusion.com/maui"
+             xmlns:button="http://schemas.syncfusion.com/maui"
+             xmlns:models="clr-namespace:EXOApp.Models"
+             x:Class="EXOApp.OverviewPageV2"
+             BackgroundColor="{StaticResource SecondaryColour}">
+    
+    
+    <ContentPage.BindingContext>
+        <models:OverviewViewModelV2/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <xct:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+            <converters:MusicNameFormatter x:Key="MusicNameFormatter" />
+            <converters:IntToBoolConverter x:Key="IntToBoolConverter" />
+            <DataTemplate x:Key="FloatTimes">
+                <Label Text="{Binding DisplayName}" HorizontalTextAlignment="Center"  FontSize="Medium" BackgroundColor="Red" TextColor="{StaticResource PrimaryColour}" HorizontalOptions="CenterAndExpand"/>
+            </DataTemplate>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <Grid Margin="0,0,0,0" Padding="2,2,2,2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.12*" />
+                <ColumnDefinition Width="0.9*" />
+                <ColumnDefinition Width="0.03*" />
+            </Grid.ColumnDefinitions>
+            <Grid.GestureRecognizers>
+                <SwipeGestureRecognizer Direction="Left" Swiped="showSettingsClicked"/>
+                <SwipeGestureRecognizer Direction="Right" Swiped="showSettingsClicked"/>
+
+            </Grid.GestureRecognizers>
+            
+            
+            <Grid BackgroundColor="Transparent" Grid.Column="2" Margin="0" Padding="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="2*"/>
+                </Grid.RowDefinitions>
+                <Button x:Name="settingsButton" Grid.Row="1" Clicked="showSettingsClicked" Text="←"/>
+            </Grid>
+
+            <Grid BackgroundColor="White"  Grid.Column="1" Margin="0,0,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.6*"/>
+                        <ColumnDefinition Width="0.5*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.35*"/>
+                        <RowDefinition Height="0.35*"/>
+                        <RowDefinition Height="0.3*"/>
+                        <RowDefinition Height="0.05*"/>
+                    </Grid.RowDefinitions>
+                    <Frame Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"  Padding="0,0,0,0">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0.24*"/>
+                                <RowDefinition Height="0.6*"/>
+                                <RowDefinition Height="0.2*"/>
+                            </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.8*"/>
+                            <ColumnDefinition Width="0.15*"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.RowSpan="3" Grid.ColumnSpan="2" Aspect="AspectFill" x:Name="renderBase"/>
+                        <Image Grid.RowSpan="3" Grid.ColumnSpan="2" Aspect="AspectFill" x:Name="renderDoor" Source="{helpers:ImageResource Assets.Images.Renders.Door.Door-Open.png}"/>
+                        <Image Grid.RowSpan="3" Grid.ColumnSpan="2" Aspect="AspectFill" x:Name="renderInterior" Source="{helpers:ImageResource Assets.Images.Renders.Interior.Full-Water.png}"/>
+
+                        <Grid Grid.Row="2" Grid.ColumnSpan="2" VerticalOptions="End" HorizontalOptions="FillAndExpand" Margin="50,0,50,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Frame Grid.Column="1" BackgroundColor="White" BindingContext="{Binding CurrentPod}" Padding="5" CornerRadius="10" BorderColor="{StaticResource PrimaryColour}">
+                                <Label Text="{Binding Status}" FontSize="Large" HorizontalOptions="Center" TextColor="{StaticResource PrimaryColour}"/>
+                            </Frame>
+                        </Grid>
+                        <Frame Grid.Row="0" Grid.Column="1" Opacity="0.9" BackgroundColor="{StaticResource AccentColour}" IsVisible="false">
+                            <StackLayout>
+                                <Grid>
+                                    <Image Source="{helpers:ImageResource Assets.Images.ResLevel.EmptyRes.png}" x:Name="emptyImage" IsVisible="true"/>
+                                    <Image Source="{helpers:ImageResource Assets.Images.ResLevel.Full.png}" x:Name="fullImage" IsVisible="false"/>
+                                    <Image Source="{helpers:ImageResource Assets.Images.ResLevel.Mid.png}" x:Name="midImage" IsVisible="true"/>
+                                    <Image Source="{helpers:ImageResource Assets.Images.ResLevel.Low.png}" x:Name="lowImage" IsVisible="false"/>
+                                </Grid>
+                                <Label Text="Low" HorizontalOptions="Center" x:Name="levelText"/>
+                            </StackLayout>
+                        </Frame>
+
+                        <Frame Grid.RowSpan="3" Grid.ColumnSpan="2" BackgroundColor="White" Margin="0,0,0,0" Padding="0,0,0,0" x:Name="renderHide"/>
+
+                        <Image Grid.RowSpan="3" Grid.ColumnSpan="2" Aspect="AspectFill" x:Name="assistWarning" IsVisible="false" Source="{helpers:ImageResource Assets.Images.TestingImages.warningTriangle.png}"/>
+
+                            <listview:SfListView Grid.RowSpan="2" Orientation="Horizontal" ItemsSource="{Binding Alarms}" AutoFitMode="DynamicHeight" >
+                                <listview:SfListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ViewCell>
+                                            <ViewCell.View>
+                                                <button:SfButton ShowIcon="True" BackgroundColor="Transparent" ImageSize="80" ImageAlignment="Top" CornerRadius="10" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" ImageSource="{Binding Icon}" Command="{Binding AlarmCommand}" CommandParameter="{Binding name}" WidthRequest="100"/>
+                                            </ViewCell.View>
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </listview:SfListView.ItemTemplate>
+                                <listview:SfListView.ItemsLayout>
+                                    <listview:GridLayout SpanCount="6"/>
+                                </listview:SfListView.ItemsLayout>
+                            </listview:SfListView>
+                        </Grid>
+                    </Frame>
+                    <Frame Grid.Column="1" Grid.Row="0"  Padding="25,10,25,10">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+
+                            <Label Grid.Row="0" Text="Float Settings" FontSize="Large" TextColor="{StaticResource PrimaryColour}"/>
+                            <Grid  Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="0.6*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Text="Fill Delay" WidthRequest="300" VerticalOptions="Center"/>
+                                <Picker Grid.Column="1" HorizontalOptions="FillAndExpand" FontSize="Medium" ItemsSource="{Binding FillDelayList}" ItemDisplayBinding="{Binding DisplayName}" SelectedItem="{Binding SelectedFillDelay}"/>
+                            </Grid>
+                            <Grid  Grid.Row="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="0.6*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Text="Starting Music Duration" WidthRequest="300" VerticalOptions="Center"/>
+                            <Picker Grid.Column="1" HorizontalOptions="FillAndExpand" FontSize="Medium" ItemsSource="{Binding MusicStartTime}" ItemDisplayBinding="{Binding DisplayName}" SelectedItem="{Binding SelectedMusicStartTime}"/>
+                            </Grid>
+                            <Grid  Grid.Row="3">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="0.6*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Text="Ending Music Duration" WidthRequest="300" VerticalOptions="Center"/>
+                            <Picker Grid.Column="1" HorizontalOptions="FillAndExpand" FontSize="Medium" ItemsSource="{Binding MusicEndTime}" ItemDisplayBinding="{Binding DisplayName}" SelectedItem="{Binding SelectedMusicEndTime}"/>
+                            </Grid>
+                            <Grid  Grid.Row="4">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="0.6*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Text="Heat During Float" WidthRequest="300" VerticalOptions="Center"/>
+                                <button:SfSwitch Grid.Column="1" IsOn="{Binding SelectedheatedFloat}" IsEnabled="{Binding HeatedFloatEnabled}" />
+                            </Grid>
+
+                        </Grid>
+
+                    </Frame>
+                    <Frame Grid.Column="1" Grid.Row="1" Padding="25,10,25,10">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Label Grid.Row="0" Text="Float Customisation" FontSize="Large" TextColor="{StaticResource PrimaryColour}"/>
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="0.6*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Text="Starting Music" WidthRequest="300" VerticalOptions="Center"/>
+                            <Picker Grid.Column="1" HorizontalOptions="FillAndExpand"  FontSize="Medium" ItemsSource="{Binding MusicTracks}" ItemDisplayBinding="{Binding name, Converter ={StaticResource MusicNameFormatter}}" SelectedItem="{Binding SelectedMusicTrackStart}"/>
+                            </Grid>
+                          <Grid Grid.Row="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="0.6*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Text="Ending Music" WidthRequest="300" VerticalOptions="Center"/>
+                            <Picker Grid.Column="1" HorizontalOptions="FillAndExpand"  FontSize="Medium" ItemsSource="{Binding MusicTracks}" ItemDisplayBinding="{Binding name, Converter ={StaticResource MusicNameFormatter}}" SelectedItem="{Binding SelectedMusicTrackEnd}"/>
+                            </Grid>
+                            <Grid Grid.Row="3">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="0.6*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Text="Lighting Choice" WidthRequest="300" VerticalOptions="Center"/>
+                            <Picker Grid.Column="1" HorizontalOptions="FillAndExpand"  FontSize="Medium" SelectedIndexChanged="lightingProfileChange" ItemsSource="{Binding LightingProfile}" SelectedItem="{Binding SelectedLightingProfile}"/>
+                            </Grid>
+                            <Grid Grid.Row="4">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="0.6*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Text="Continuous Lighting" WidthRequest="300" VerticalOptions="Center"/>
+                                <button:SfSwitch Grid.Column="1" IsOn="{Binding SelectedContinousLights}" IsEnabled="{Binding ContinousLightsEnabled}" />
+                            </Grid>
+                        </Grid>
+                    </Frame>
+                    <Frame Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Padding="5,20,5,20">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1.5*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <StackLayout Grid.Column="0" Grid.RowSpan="2" Orientation="Horizontal" HorizontalOptions="Center" x:Name="TemperatureContainer">
+                                <Frame Background="white" x:Name="TemperatureFrame"  Padding="0,0,0,0">
+                                    <Label Text="{Binding TemperatureLabel}" HorizontalTextAlignment="Center" VerticalOptions="Center" HorizontalOptions="Center" FontSize="Large" TextColor="{StaticResource PrimaryColour}"/>
+                                </Frame>
+                            </StackLayout>
+                            <StackLayout Grid.Column="2" Grid.RowSpan="2" Orientation="Horizontal" HorizontalOptions="Center" x:Name="TimeContainer">
+                                <Frame Background="white" x:Name="TimeFrame"  Padding="0,0,0,0">
+                                    <Grid>
+                                        <Grid IsVisible="{Binding RemainingTimeActive, Converter={xct:InvertedBoolConverter}}">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="2*"/>
+                                                <RowDefinition Height="*"/>
+                                            </Grid.RowDefinitions>
+                                        <Button Grid.Row="0" Command="{Binding FloatTimeCommand}" CommandParameter="1" Text="↑" Padding="0"/>
+                                        <Grid Grid.Row="1" BackgroundColor="White" Padding="0" Margin="0">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="*"/>
+                                            </Grid.RowDefinitions>
+                                            <Label Grid.Row="0" Text="Float Time:" HorizontalOptions="Center" VerticalOptions="Center" FontSize="Medium" TextColor="{StaticResource PrimaryColour}"/>
+                                            <Label Grid.Row="1" Text="{Binding CurrentFloatTime}" HorizontalOptions="Center" VerticalOptions="Center" FontSize="Medium" TextColor="{StaticResource PrimaryColour}"/>
+                                        </Grid>
+                                        <Button Grid.Row="2"  Command="{Binding FloatTimeCommand}" CommandParameter="0" Text="↓" Padding="0"/>
+                                        </Grid>
+                                        <Label HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" FontSize="Medium" TextColor="{StaticResource PrimaryColour}" Text="{Binding FloatTimeLabel}" IsVisible="{Binding RemainingTimeActive}"/>
+                                    </Grid>
+                                </Frame>
+                            </StackLayout>
+
+                            <Grid Grid.Row="0" Grid.Column="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Button Grid.Column="0" HorizontalOptions="FillAndExpand" BindingContext="{Binding TopLeftButton}" BackgroundColor ="{Binding Color}" IsVisible="{Binding Visible}" Text="{Binding Text}" IsEnabled="{Binding Enabled}"  Command="{Binding DashboardCommand}" CommandParameter="TopLeft" Margin="0,0,5,5"/>
+                                <Button Grid.Column="1" HorizontalOptions="FillAndExpand" BindingContext="{Binding TopRightButton}" BackgroundColor ="{Binding Color}" IsVisible="{Binding Visible}" Text="{Binding Text}" IsEnabled="{Binding Enabled}" Command="{Binding DashboardCommand}" CommandParameter="TopRight" Margin="5,0,0,5"/>
+                            </Grid>
+
+                            <Grid Grid.Row="1" Grid.Column="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Button Grid.Column="0" HorizontalOptions="FillAndExpand"  BindingContext="{Binding BottomLeftButton}" BackgroundColor ="{Binding Color}" IsVisible="{Binding Visible}" Text="{Binding Text}" IsEnabled="{Binding Enabled}" Command="{Binding DashboardCommand}" CommandParameter="BottomLeft" Margin="0,0,6,0"/>
+                                <Button Grid.Column="1" HorizontalOptions="FillAndExpand"  BindingContext="{Binding BottomCentreButton}" BackgroundColor ="{Binding Color}" IsVisible="{Binding Visible}" Text="{Binding Text}" IsEnabled="{Binding Enabled}" Command="{Binding DashboardCommand}" CommandParameter="BottomCentre" Margin="3,0,3,0"/>
+                                <Button Grid.Column="2" HorizontalOptions="FillAndExpand"  BindingContext="{Binding BottomRightButton}" BackgroundColor ="{Binding Color}" IsVisible="{Binding Visible}" Text="{Binding Text}" IsEnabled="{Binding Enabled}" Command="{Binding DashboardCommand}" CommandParameter="BottomRight" Margin="6,0,0,0"/>
+                                <Button Grid.Column="0" Grid.ColumnSpan="3" HorizontalOptions="FillAndExpand"  BindingContext="{Binding BottomLargeButton}" BackgroundColor ="{Binding Color}" IsVisible="{Binding Visible}" Text="{Binding Text}" IsEnabled="{Binding Enabled}" Command="{Binding DashboardCommand}" CommandParameter="BottomLarge"/>
+                            </Grid>
+                        </Grid>
+                    </Frame>
+                <Frame Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" BackgroundColor="White" Padding="0,0,0,0" Margin="0,0,0,0" CornerRadius="0">
+                    <Grid Padding="0,0,0,0" Margin="0,0,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Text="{Binding VersionLabel}" TextColor="LightGray" FontSize="Small" VerticalOptions="Center" HorizontalOptions="Start"/>
+                        <Label Grid.Column="1" Text="{Binding WorldTimeLabel}" FontSize="Small" VerticalOptions="Center" HorizontalOptions="Center"/>
+                        <Label Grid.Column="2" Text="{Binding IpLabel}" TextColor="LightGray" FontSize="Small" VerticalOptions="Center" HorizontalOptions="End"/>
+                        <Grid Grid.ColumnSpan="3">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label  x:Name="InternetWarning" IsVisible="false" HorizontalOptions="Center" Text="No Internet Connection Detected" TextColor="Red"/>
+                        </Grid>
+                    </Grid>
+                </Frame>
+            </Grid>
+                
+            <Frame BackgroundColor="Transparent" IsVisible="false" IsEnabled="False" Grid.Column="1" Padding="0,0,0,0" Margin="0,0,0,0" x:Name="Side_Menu" Opacity="0">
+                <Grid>
+
+                    <Frame BackgroundColor="{StaticResource PrimaryColour}" Margin="0,0,0,0" Padding="0,0,0,0">
+                        <Frame BackgroundColor="{StaticResource AccentColour}" CornerRadius="16" Margin="10,10,10,10" Padding="0,0,0,0">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="5*"/>
+                                    <ColumnDefinition Width="0.71*"/>
+                                </Grid.ColumnDefinitions>
+
+
+                                <listview:SfListView Grid.Column="0"  ItemsSource="{Binding MenuButtons}" AutoFitMode="None" ItemSize="200" SelectionMode="None" Orientation="Horizontal" HorizontalOptions="End" VerticalOptions="End">
+                                    <listview:SfListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <ViewCell>
+                                                <ViewCell.View>
+                                                    <button:SfButton ShowIcon="True" ImageSize="120" FontSize="20" BackgroundColor="White" ImageAlignment="Top" TextColor="{StaticResource PrimaryColour}" CornerRadius="25" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" ImageSource="{Binding iconImage}" Text="{Binding title}" Command="{Binding buttonCommand}" CommandParameter="{Binding title}" Margin="10,10,10,10"/>
+                                                </ViewCell.View>
+                                            </ViewCell>
+                                        </DataTemplate>
+                                    </listview:SfListView.ItemTemplate>
+                                    <listview:SfListView.ItemsLayout>
+                                        <listview:GridLayout SpanCount="4" />
+                                    </listview:SfListView.ItemsLayout>
+                                </listview:SfListView>
+                                    <listview:SfListView ItemsSource="{Binding PowerButtons}" Grid.Column="1" AutoFitMode="None" ItemSize="200" SelectionMode="None" Orientation="Horizontal" HorizontalOptions="End" VerticalOptions="End">
+                                    <listview:SfListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <ViewCell>
+                                                <ViewCell.View>
+                                                    <button:SfButton ShowIcon="True" ImageSize="80" FontSize="20" BackgroundColor="{StaticResource PrimaryColour}" ImageAlignment="Top" TextColor="White" CornerRadius="25" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" ImageSource="{Binding iconImage}" Text="{Binding title}" Command="{Binding buttonCommand}" CommandParameter="{Binding title}" Margin="10,10,10,10"/>
+                                                </ViewCell.View>
+                                            </ViewCell>
+                                        </DataTemplate>
+                                    </listview:SfListView.ItemTemplate>
+                                    <listview:SfListView.ItemsLayout>
+                                        <listview:GridLayout SpanCount="4" />
+                                    </listview:SfListView.ItemsLayout>
+                                </listview:SfListView>
+                            </Grid>
+
+                        </Frame>
+                    </Frame>
+                </Grid>
+            </Frame>
+            <Frame Grid.Column="1" Grid.ColumnSpan="2" Opacity="0.2" BackgroundColor="{StaticResource PrimaryColour}" IsVisible="{Binding LockScreen}" CornerRadius="5" Margin="0,0,0,0"/>
+
+            <Grid Grid.Column="1" IsVisible="{Binding LockScreen}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1.5*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="1.5*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="2*"/>
+                </Grid.RowDefinitions>
+                    <Frame Grid.Column="1" Grid.Row="1" BackgroundColor="{StaticResource PrimaryColour}" HorizontalOptions="FillAndExpand" CornerRadius="15" HeightRequest="150" Padding="3">
+                        <Frame BackgroundColor="White" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" CornerRadius="8" Padding="10" Margin="8">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Label Text="Please Wait" HorizontalOptions="Center" FontSize="40" VerticalOptions="Start"/>
+                              <busyindicator:SfBusyIndicator Grid.Row="1" 
+                               AnimationType="LinearMaterial" 
+                               VerticalOptions="End" 
+                               HeightRequest="50"
+                               WidthRequest="50"
+                               SizeFactor="0.8"/>
+                            </Grid>
+                        </Frame>
+                    </Frame>
+            </Grid>
+
+            <Frame Grid.Column="0" Grid.Row="0" BackgroundColor="{StaticResource PrimaryColour}" x:Name="podBar" Padding="0,0,0,0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.1*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Image Grid.Row="0" Source="{helpers:ImageResource Assets.Images.Logos.LogoWhite.png}" Aspect="AspectFit"/>
+
+                    <listview:SfListView Grid.Row="1"  ItemsSource="{Binding PodSideList}" BackgroundColor="Transparent" SelectionBackground="Transparent" AutoFitMode="DynamicHeight" SelectedItem="{Binding CurrentPod}" SelectionChangedCommand="{Binding ChangePodCommand}"  ItemBorderColor="Transparent">
+                        <listview:SfListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <ViewCell.View>
+                                        <Grid>
+                                            <Image Source="{helpers:ImageResource Assets.Images.SideBar.selectedPod.png}" Aspect="AspectFit" Margin="0,0,0,0" IsVisible="{Binding Selected}"/>
+                                            <Image Source="{helpers:ImageResource Assets.Images.SideBar.miniPod.png}" Aspect="AspectFit" Margin="0,0,0,0"/>
+                                            <Image Aspect="AspectFit" Source="{helpers:ImageResource Assets.Images.TestingImages.warningTriangle.png}" IsVisible="{Binding AssistAlarm}"/>
+                                            <StackLayout HorizontalOptions="Center" VerticalOptions="End"  Margin="7,0,0,10">
+                                                <Frame  Padding="5,2,5,5" CornerRadius="5"  HeightRequest="15" BackgroundColor="{StaticResource SecondaryColour}" BorderColor="{StaticResource PrimaryColour}">
+                                                    <StackLayout Orientation="Horizontal">
+                                                        <Label Text="{Binding Name}" FontSize="13" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                                        <Label Text="{Binding Status}" FontSize="13" HorizontalOptions="Center" VerticalOptions="Center" TextColor="Green"/>
+                                                    </StackLayout>
+                                                </Frame>
+                                            </StackLayout>
+                                            <StackLayout HorizontalOptions="Start" VerticalOptions="Start" Margin="10,10,0,0">
+                                                <Frame  Padding="2,2,2,2" CornerRadius="15" WidthRequest="25" HeightRequest="25" BackgroundColor="#D00000" IsVisible="{Binding ErrorCount, Converter ={StaticResource IntToBoolConverter}}">
+                                                    <Label Text="{Binding ErrorCount}" FontSize="Small" HorizontalOptions="Center" VerticalOptions="Center" TextColor="White"/>
+                                                </Frame>
+                                            </StackLayout>
+                                        </Grid>
+                                    </ViewCell.View>
+                                </ViewCell>
+                            </DataTemplate>
+                        </listview:SfListView.ItemTemplate>
+                    </listview:SfListView>
+                </Grid>
+            </Frame>
+            <Frame Grid.Column="1" BackgroundColor="White" x:Name="changePodScreen" CornerRadius="0" Margin="0,0,0,0"/>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

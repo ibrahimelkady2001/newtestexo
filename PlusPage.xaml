@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EXOApp.PlusPage"
+             xmlns:models="clr-namespace:EXOApp.Models"
+             xmlns:listview="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+             xmlns:xct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:helpers="clr-namespace:EXOApp.Helpers"
+             xmlns:busyindicator="http://schemas.syncfusion.com/maui"
+>
+
+
+    <ContentPage.BindingContext>
+        <models:PlusViewModel/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <xct:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Frame Padding="0">
+            <Frame BackgroundColor="White">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="8*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid>
+                        <Image Source="{helpers:ImageResource Assets.Images.Logos.Logo.png}" Aspect="AspectFit"/>
+                        <Label Text="{Binding PodLabel}" VerticalOptions="End" Padding="30,20,0,0" FontSize="Large"/>
+                    </Grid>
+                        <Frame Grid.Row="1">
+                        <listview:SfListView ItemsSource="{Binding Parameters}" IsStickyHeader="True" SelectionMode="None" AutoFitMode="DynamicHeight">
+                            <listview:SfListView.HeaderTemplate>
+                                <DataTemplate>
+                                    <Frame BackgroundColor="{StaticResource PrimaryColour}" Padding="10,0,10,0" Margin="0,0,0,0" CornerRadius="15">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="2*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Label Grid.Column="0" Text="Name" FontAttributes="Bold"  HorizontalOptions="Start" TextColor="White"/>
+                                            <Label Grid.Column="1" Text="Units" FontAttributes="Bold" HorizontalOptions="Center" TextColor="White"/>
+                                            <Label Grid.Column="2" Text="Minimum" FontAttributes="Bold" HorizontalOptions="Center" TextColor="White"/>
+                                            <Label Grid.Column="3" Text="Value" FontAttributes="Bold" HorizontalOptions="Center" TextColor="White"/>
+                                            <Label Grid.Column="4" Text="Maximum" FontAttributes="Bold" HorizontalOptions="Center" TextColor="White"/>
+                                        </Grid>
+                                    </Frame>
+                                </DataTemplate>
+                            </listview:SfListView.HeaderTemplate>
+                            <listview:SfListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <ViewCell.View>
+                                            <Frame BackgroundColor="{Binding BackgroundColour}" Padding="5,0,0,0" Margin="3,3,3,3" CornerRadius="5">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="2*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Label Grid.ColumnSpan="5" Text="{Binding Title}" HorizontalOptions="Center" FontAttributes="Bold" TextColor="White"/>
+                                                    <Label Grid.Column="0" Text="{Binding Name}" />
+                                                    <Label Grid.Column="1" Text="{Binding Units}" HorizontalOptions="Center"/>
+                                                    <Label Grid.Column="2" Text="{Binding LowerQuartile}" IsVisible="{Binding Gauge}" HorizontalOptions="Center"/>
+                                                    <Label Grid.Column="3" Text="{Binding ReadValue}" IsVisible="{Binding Gauge}" HorizontalOptions="Center"/>
+                                                    <Label Grid.Column="3" Text="{Binding StringValue}" IsVisible="{Binding Gauge, Converter={xct:InvertedBoolConverter}}" HorizontalOptions="Center"/>
+                                                    <Label Grid.Column="4" Text="{Binding UpperQuartile}" IsVisible="{Binding Gauge}" HorizontalOptions="Center"/>
+                                                </Grid>
+                                            </Frame>
+                                        </ViewCell.View>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </listview:SfListView.ItemTemplate>
+                        </listview:SfListView>
+                    </Frame>
+                    <Button Grid.Row="2" Text="Return to Dashboard" HorizontalOptions="Start" Command="{Binding OnExit}"/>
+                    <Grid Grid.Row="0">
+                        <Image Source="{helpers:ImageResource Assets.Images.TestingImages.warningTriangle.png}" HorizontalOptions="End" Aspect="AspectFit" IsVisible="{Binding IndicatorRunning, Converter={xct:InvertedBoolConverter}}"/>
+                        <busyindicator:SfBusyIndicator HorizontalOptions="End" AnimationType="CircularMaterial" IsRunning="{Binding IndicatorRunning}"/>
+                    </Grid>
+                </Grid>
+                    
+            </Frame>
+        </Frame>
+    </ContentPage.Content>
+</ContentPage>

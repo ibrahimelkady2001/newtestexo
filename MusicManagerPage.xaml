@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:EXOApp.Converters"
+             x:Class="EXOApp.MusicManagerPage"
+             xmlns:listview="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+             xmlns:models="clr-namespace:EXOApp.Models"
+             xmlns:range="clr-namespace:Syncfusion.Maui.Sliders;assembly=Syncfusion.Maui.Sliders"
+             >
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:MusicNameFormatter x:Key="MusicNameFormatter" />
+            <converters:MusicAuthHelper x:Key="MusicAuthHelper" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.BindingContext>
+        <models:MusicManagerViewModel/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content>
+        <Grid Margin="0,0,0,0" Padding="2,2,2,2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.2*" />
+                <ColumnDefinition Width="0.8*" />
+            </Grid.ColumnDefinitions>
+            <listview:SfListView Grid.Column="1" ItemsSource="{Binding MusicTracks}" AutoFitMode="DynamicHeight" SelectionMode="None" IsStickyHeader="True">
+                <listview:SfListView.HeaderTemplate>
+                    <DataTemplate>
+                        <Frame BackgroundColor="{StaticResource PrimaryColour}" Padding="10,0,10,0" Margin="0,0,0,0" CornerRadius="15">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1.5*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="0.5*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="0.5*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0" Text="Name" FontAttributes="Bold"  HorizontalOptions="Start" TextColor="White"/>
+                                <Label Grid.Column="1" Grid.ColumnSpan="2" Text="Volume" FontAttributes="Bold"  HorizontalOptions="Center" TextColor="White"/>
+                                <Label Grid.Column="4" Text="Delete" FontAttributes="Bold" HorizontalOptions="Center" TextColor="White"/>
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </listview:SfListView.HeaderTemplate>
+
+                <listview:SfListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame Padding="0">
+                                <Grid Margin="50,10,50,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1.5*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="0.7*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="0.5*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Column="0" VerticalOptions="Center" Text="{Binding TrackName, Converter ={StaticResource MusicNameFormatter}}" FontAttributes="Bold"/>
+                                    <Grid Grid.Column="1" Padding="0" Margin="0,0,10,0">
+                                        <Grid HorizontalOptions="Center">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Label HorizontalOptions="FillAndExpand" Grid.Column="0" VerticalOptions="Start" Text="{Binding Volume}" Margin="0" Padding="0"/>
+                                            <Label HorizontalOptions="FillAndExpand" Grid.Column="1" VerticalOptions="Start" Text="%" Margin="0" Padding="0"/>
+                                        </Grid>
+                                        <range:SfRangeSlider Minimum="0" 
+                       Maximum="100" 
+                       RangeStart="{Binding Volume}" 
+                       RangeEnd="100"
+                       StepSize="1" 
+                       ShowTicks="False" 
+                       Margin="0,0,0,0"/>
+                                    </Grid>
+                                    <Button Grid.Column="2"  VerticalOptions="Center" Text="Apply Volume" Command="{Binding ApplyVolume}" CommandParameter="{Binding TrackName}"/>
+                                    
+                                    <Button Grid.Column="4"  VerticalOptions="Center" Text="Delete" Command="{Binding DeleteTrack}" CommandParameter="{Binding TrackName}" BackgroundColor="Red" IsVisible="{Binding DeleteAvailable}"/>
+                                </Grid>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </listview:SfListView.ItemTemplate>
+            </listview:SfListView>
+            <Frame Grid.Column="0">
+                <Grid>
+                    <StackLayout>
+                        <Label Text="{Binding PodNumber}" VerticalOptions="End" Padding="30,20,0,0" FontSize="Large"/>
+
+                        <Button Text="Add Music" Command="{Binding AddMusicCommand}" FontSize="Small"/>
+                        <Button Text="Refresh Database" Command="{Binding refreshDBCommand}" FontSize="Small"/>
+
+                    </StackLayout>
+                    <Grid VerticalOptions="End">
+                        <Button Text="Back" Command="{Binding ExitCommand}"/>
+                    </Grid>
+                </Grid>
+            </Frame>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

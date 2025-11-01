@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EXOApp.UpdatePodPage"
+             xmlns:helpers="clr-namespace:EXOApp.Helpers"
+             xmlns:syncmaskededit="http://schemas.syncfusion.com/maui"
+             xmlns:syncbuttons="http://schemas.syncfusion.com/maui"        
+             xmlns:busyindicator="http://schemas.syncfusion.com/maui"
+             xmlns:models="clr-namespace:EXOApp.Models"
+>
+    <ContentPage.BindingContext>
+        <models:UpdateViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="0.4*"/>
+            </Grid.RowDefinitions>
+            <Frame Grid.Row="0" Grid.RowSpan="2"  Margin="0,0,0,0" Padding="10,10,10,10">
+                <StackLayout>
+                    <Grid>
+                        <Image WidthRequest="200" HorizontalOptions="Start" Source="{helpers:ImageResource Assets.Images.Logos.Logo.png}"/>
+                        <Label Text="Software Update" HorizontalOptions="Center" VerticalOptions="Center" FontSize="50" TextColor="{StaticResource PrimaryColour}"/>
+                    </Grid>
+                    <Label Text="WARNING" HorizontalOptions="Center" FontSize="Large" TextColor="Red" FontAttributes="Bold"/>
+                    <Label Text="Only update the EXO in Standby or Stop (Idle) mode.&#x0a;Do not close the program or turn off the EXO during an update&#x0a;Your EXO Pods will be unavailable for use until the update has completed.&#x0a;All available EXO Systems will be updated." HorizontalTextAlignment="Center" HorizontalOptions="Center" FontSize="Large" TextColor="Red" FontAttributes="Bold"/>
+                </StackLayout>
+            </Frame>
+            <Label Text="{Binding Key}" HorizontalOptions="End" Margin="10" TextColor="Gray"/>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Frame Margin="0,0,0,0" Padding="10,10,10,10">
+                    <ScrollView Orientation="Vertical">
+                        <Grid>
+                            <Label Text="{Binding PodUpdateList}"/>
+                        </Grid>
+                    </ScrollView>
+                </Frame >
+                <Frame Grid.Column="1"  Margin="0,0,0,0" Padding="10,10,10,10">
+                    <ScrollView Orientation="Vertical">
+                        <Grid>
+                            <Label Text="{Binding OutputLog}"/>
+                        </Grid>
+                    </ScrollView>
+                </Frame>
+            </Grid>
+            <Frame Grid.Row="3"  Margin="0,0,0,0" Padding="10,10,10,10">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width ="*"/>
+                        <ColumnDefinition Width ="*"/>
+                        <ColumnDefinition Width ="*"/>
+                    </Grid.ColumnDefinitions>
+                    <syncbuttons:SfButton Grid.Column="0" Text="Return to Dashboard" x:Name="returnButton" Command="{Binding OnExit}" HorizontalOptions="Start" WidthRequest="300" IsEnabled="{Binding ControlsAvailable}">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal">
+                                    <VisualState.Setters>
+                                        <Setter Property="Background" Value="{StaticResource PrimaryColour}"/>
+                                        <Setter Property="TextColor" Value="{StaticResource SecondaryColour}"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Hovered">
+                                    <VisualState.Setters>
+                                        <Setter Property="Background" Value="{StaticResource SecondaryColour}"/>
+                                        <Setter Property="TextColor" Value="{StaticResource PrimaryColour}"/>
+                                        <Setter Property="Stroke" Value="{StaticResource PrimaryColour}"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups> 
+                    </syncbuttons:SfButton>
+
+                    <StackLayout Grid.Column="1" Orientation="Horizontal">
+                        <Entry HorizontalOptions="FillAndExpand" VerticalOptions="Center" Text="{Binding ExtraPassword}"/>
+                        <syncbuttons:SfButton Grid.Column="2" Text="Activate Code" HorizontalOptions="End" WidthRequest="300" Command="{Binding extraFeaturesCommand}"  IsEnabled="{Binding ControlsAvailable}">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal">
+                                        <VisualState.Setters>
+                                            <Setter Property="Background" Value="{StaticResource PrimaryColour}"/>
+                                            <Setter Property="TextColor" Value="{StaticResource SecondaryColour}"/>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                    <VisualState x:Name="Hovered">
+                                        <VisualState.Setters>
+                                            <Setter Property="Background" Value="{StaticResource SecondaryColour}"/>
+                                            <Setter Property="TextColor" Value="{StaticResource PrimaryColour}"/>
+                                            <Setter Property="Stroke" Value="{StaticResource PrimaryColour}"/>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </syncbuttons:SfButton>
+                    </StackLayout>
+
+                    <syncbuttons:SfButton Grid.Column="2" Text="Update EXO Systems" x:Name="updateButton" HorizontalOptions="End" WidthRequest="300" Command="{Binding UpdateCommand}"  IsEnabled="{Binding ControlsAvailable}">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal">
+                                    <VisualState.Setters>
+                                        <Setter Property="Background" Value="{StaticResource PrimaryColour}"/>
+                                        <Setter Property="TextColor" Value="{StaticResource SecondaryColour}"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Hovered">
+                                    <VisualState.Setters>
+                                        <Setter Property="Background" Value="{StaticResource SecondaryColour}"/>
+                                        <Setter Property="TextColor" Value="{StaticResource PrimaryColour}"/>
+                                        <Setter Property="Stroke" Value="{StaticResource PrimaryColour}"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </syncbuttons:SfButton>
+                </Grid>
+            </Frame>
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

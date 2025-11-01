@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EXOApp.LogPage"
+             xmlns:chart="http://schemas.syncfusion.com/maui"
+             xmlns:models="clr-namespace:EXOApp.Models"
+             xmlns:button="http://schemas.syncfusion.com/maui"
+             xmlns:helpers="clr-namespace:EXOApp.Helpers"
+             BackgroundColor="White"
+             >
+
+    <ContentPage.BindingContext>
+        <models:LogViewModel/>
+    </ContentPage.BindingContext>
+    
+    <ContentPage.Content>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            <Frame Grid.Column="0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="0.5*"/>
+                        <RowDefinition Height="0.5*"/>
+                        <RowDefinition Height="0.5*"/>
+                        <RowDefinition Height="0.5*"/>
+                    </Grid.RowDefinitions>
+                    <Image Source="{helpers:ImageResource Assets.Images.Logos.Logo.png}" Aspect="AspectFit"/>
+                    <StackLayout Grid.Row="1">
+                        <Label Text="Parameter"/>
+                        <Picker SelectedItem="{Binding SelectedParameter}" ItemsSource="{Binding ParameterList}" x:Name="Parameters"/>
+                    </StackLayout>
+                    <StackLayout Grid.Row="2">
+                        <Label Text="From"/>
+                        <DatePicker Date="{Binding ChosenFirstDate}" HorizontalOptions="FillAndExpand" Format="MM/dd/yyyy"/>
+                    </StackLayout>
+                    <StackLayout Grid.Row="3">
+                        <Label Text="To"/>
+                        <DatePicker Date="{Binding ChosenLastDate}"/>
+                    </StackLayout>
+                    <Grid Grid.Row="4">
+                        <button:SfSegmentedControl x:Name="Percentages" VisibleSegmentsCount="2"  />
+                    </Grid>
+                    <Grid Grid.Row="5">
+                        <Label Text="Include Demo"/>
+                        <button:SfCheckBox HorizontalOptions ="End" IsChecked="{Binding Include660}"/>
+                    </Grid>
+                    <Button Grid.Row="6" Text="Generate Graphs" Command="{Binding GenerateGraphCommand}" IsEnabled="{Binding ControlAvailable}"/>
+                    <Button Grid.Row="7" Text="Back" Command="{Binding exitCommand}" IsEnabled="{Binding ControlAvailable}"/>
+                </Grid>
+            </Frame>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.3*"/>
+                    <ColumnDefinition Width="0.7*"/>
+                </Grid.ColumnDefinitions>
+                <Frame Grid.Row="0" Grid.Column="0">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height ="*"/>
+                            <RowDefinition Height ="*"/>
+                            <RowDefinition Height ="*"/>
+                            <RowDefinition Height ="*"/>
+                        </Grid.RowDefinitions>
+                        <Label Text="Key Information" FontSize="Large" HorizontalOptions="Center" TextColor="{StaticResource PrimaryColour}"/>
+                        <Label Grid.Row="1" Text="{Binding Label0}"/>
+                        <Label Grid.Row="2" Text="{Binding Label1}"/>
+                        <Label Grid.Row="3" Text="{Binding Label2}"/>
+                    </Grid>
+                </Frame>
+                <Frame Grid.Row="0" Grid.Column="1">
+                <chart:SfCircularChart x:Name="PiChart">
+    <chart:SfCircularChart.Legend>
+        <chart:ChartLegend Placement="Right" 
+                          >
+            <chart:ChartLegend.LabelStyle>
+                <chart:ChartLegendLabelStyle FontSize="20" 
+                                            FontFamily="Poppins"/>
+            </chart:ChartLegend.LabelStyle>
+        </chart:ChartLegend>
+    </chart:SfCircularChart.Legend>
+</chart:SfCircularChart>
+                </Frame>
+
+
+                <Frame Grid.Row="1" Grid.ColumnSpan="2">
+             <chart:SfCartesianChart x:Name="LineChart">
+    <chart:SfCartesianChart.Legend>
+        <chart:ChartLegend Placement="Right"  
+                          >
+            <chart:ChartLegend.LabelStyle>
+                <chart:ChartLegendLabelStyle FontSize="20" 
+                                            FontFamily="Poppins"/>
+            </chart:ChartLegend.LabelStyle>
+        </chart:ChartLegend>
+    </chart:SfCartesianChart.Legend>
+</chart:SfCartesianChart>
+                </Frame>
+
+
+            </Grid>
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

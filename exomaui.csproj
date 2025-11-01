@@ -1,0 +1,160 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+   <UseMaui>true</UseMaui>
+        <SingleProject>true</SingleProject>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    <OutputType>Exe</OutputType>
+         <!-- Display name -->
+        <ApplicationTitle>MauiApp6</ApplicationTitle>
+
+        <!-- App Identifier -->
+        <ApplicationId>com.companyname.mauiapp6</ApplicationId>
+
+        <!-- Versions -->
+        <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+        <ApplicationVersion>1</ApplicationVersion>
+         <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net9.0-windows10.0.19041.0</TargetFrameworks>
+       <TargetFrameworks Condition="!$([MSBuild]::IsOSPlatform('windows'))">net9.0-maccatalyst</TargetFrameworks>
+         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
+        <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">15.0</SupportedOSPlatformVersion>
+        <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
+        <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
+        <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
+        <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+ 
+   
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\Audio\Alert.mp3" />
+    <EmbeddedResource Include="Assets\Backend\BEhw1" />
+    <EmbeddedResource Include="Assets\Images\Alarm\BE_Crash.png" />
+    <EmbeddedResource Include="Assets\Images\Alarm\Stop.png" />
+    <EmbeddedResource Include="Assets\Images\Alarm\UV1.png" />
+    <EmbeddedResource Include="Assets\Images\Alarm\Wipe.png" />
+    <EmbeddedResource Include="Assets\Images\FunctionIcons\Ban.png" />
+    <EmbeddedResource Include="Assets\Images\FunctionIcons\Close.png" />
+    <EmbeddedResource Include="Assets\Images\Alarm\Connection_Lost.png" />
+    <EmbeddedResource Include="Assets\Images\Alarm\Filter.png" />
+    <EmbeddedResource Include="Assets\Images\Alarm\Filter_2.png" />
+    <EmbeddedResource Include="Assets\Images\Alarm\H2O2_Empty.png" />
+    <EmbeddedResource Include="Assets\Images\Alarm\Help.png" />
+    <EmbeddedResource Include="Assets\Images\Alarm\UV.png" />
+    <EmbeddedResource Include="Assets\Images\FunctionIcons\Config.png" />
+    <EmbeddedResource Include="Assets\Images\FunctionIcons\Dose.png" />
+    <EmbeddedResource Include="Assets\Images\FunctionIcons\DrainDown.png" />
+    <EmbeddedResource Include="Assets\Images\FunctionIcons\DryFloat.png" />
+    <EmbeddedResource Include="Assets\Images\FunctionIcons\Exo-Exo.png" />
+    <EmbeddedResource Include="Assets\Images\FunctionIcons\FillEmpty.png" />
+    <EmbeddedResource Include="Assets\Images\FunctionIcons\Hibernate.png" />
+    <EmbeddedResource Include="Assets\Images\FunctionIcons\Lighting.png" />
+    <EmbeddedResource Include="Assets\Images\FunctionIcons\LogOff.png" />
+    <EmbeddedResource Include="Assets\Images\FunctionIcons\Logs.png" />
+    <EmbeddedResource Include="Assets\Images\FunctionIcons\Music.png" />
+    <EmbeddedResource Include="Assets\Images\FunctionIcons\Plus.png" />
+    <EmbeddedResource Include="Assets\Images\FunctionIcons\Reboot.png" />
+    <EmbeddedResource Include="Assets\Images\FunctionIcons\Return.png" />
+    <EmbeddedResource Include="Assets\Images\FunctionIcons\Salt_Mix.png" />
+    <EmbeddedResource Include="Assets\Images\FunctionIcons\Service_ModeFillPod.png" />
+    <EmbeddedResource Include="Assets\Images\FunctionIcons\Service_ModeFillRes.png" />
+    <EmbeddedResource Include="Assets\Images\FunctionIcons\Settings.png" />
+    <EmbeddedResource Include="Assets\Images\FunctionIcons\Shutdown.png" />
+    <EmbeddedResource Include="Assets\Images\FunctionIcons\Support.png" />
+    <EmbeddedResource Include="Assets\Images\FunctionIcons\Update.png" />
+    <EmbeddedResource Include="Assets\Images\Logos\Logo.png" />
+    <EmbeddedResource Include="Assets\Images\Logos\LogoWithWellness.png" />
+    <EmbeddedResource Include="Assets\Images\Logos\WellnessLogo.png" />
+    <EmbeddedResource Include="Assets\Images\Plus\miniPodPlus.png" />
+    <EmbeddedResource Include="Assets\Images\Renders\Base\No-Lights.png" />
+    <EmbeddedResource Include="Assets\Images\Renders\Base\Rainbow-Lights.png" />
+    <EmbeddedResource Include="Assets\Images\Renders\Base\White-Lights.png" />
+    <EmbeddedResource Include="Assets\Images\Renders\Base\Blue-Lights.png" />
+    <EmbeddedResource Include="Assets\Images\Renders\Base\Green-Lights.png" />
+    <EmbeddedResource Include="Assets\Images\Renders\Base\Orange-Lights.png" />
+    <EmbeddedResource Include="Assets\Images\Renders\Base\Purple-Lights.png" />
+    <EmbeddedResource Include="Assets\Images\Renders\Base\Red-Lights.png" />
+    <EmbeddedResource Include="Assets\Images\Renders\Base\Yellow-Lights.png" />
+    <EmbeddedResource Include="Assets\Images\Renders\Door\Door-Closed.png" />
+    <EmbeddedResource Include="Assets\Images\Renders\Door\Door-Open.png" />
+    <EmbeddedResource Include="Assets\Images\Renders\Interior\Full-Water.png" />
+    <EmbeddedResource Include="Assets\Images\Logos\LogoWhite.png" />
+    <EmbeddedResource Include="Assets\Images\ResLevel\EmptyRes.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\Images\ResLevel\Full.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\Images\ResLevel\Low.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\Images\ResLevel\Mid.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\Images\SideBar\miniPod.png" />
+    <EmbeddedResource Include="Assets\Images\SideBar\selectedPod.png" />
+    <EmbeddedResource Include="Assets\Images\TemperatureDial\TemperaturePointer.png" />
+    <EmbeddedResource Include="Assets\Images\TestingImages\Arrow.png" />
+    <EmbeddedResource Include="Assets\Images\TestingImages\menuTest.png" />
+    <EmbeddedResource Include="Assets\Images\TestingImages\Selected.png" />
+    <EmbeddedResource Include="Assets\Images\SideBar\selectedSetting.png" />
+    <EmbeddedResource Include="Assets\Images\TestingImages\Unselected.png" />
+    <EmbeddedResource Include="Assets\Backend\BEhw0" />
+    <EmbeddedResource Include="Assets\Backend\BEhw3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Images\Overview - Background.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\Images\TemperatureDial\TemperatureDial.png" />
+    <EmbeddedResource Include="Assets\Images\TestingImages\warningTriangle.png" />
+  </ItemGroup>
+
+   <ItemGroup>
+        <!-- App Icon -->
+        <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+
+        <!-- Splash Screen -->
+        <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+
+        <!-- Images -->
+        <MauiImage Include="Resources\Images\*" />
+        <MauiImage Update="Resources\Images\dotnet_bot.png" Resize="True" BaseSize="300,185" />
+
+        <!-- Custom Fonts -->
+        <MauiFont Include="Resources\Fonts\*" />
+
+        <!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
+        <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+    </ItemGroup>
+  <ItemGroup>
+  <PackageReference Include="Plugin.Maui.Audio" Version="4.0.0" />
+  <PackageReference Include="Xamarin.CommunityToolkit.MauiCompat" Version="2.0.2-preview1013" />
+  <PackageReference Include="CommunityToolkit.Maui" Version="12.2.0" />
+  <PackageReference Include="Syncfusion.Maui.Sliders" Version="31.2.2" />
+  <PackageReference Include="Syncfusion.Maui.Expander" Version="31.2.2" />
+  <PackageReference Include="Syncfusion.Maui.Charts" Version="31.2.2" />
+  <PackageReference Include="Syncfusion.Maui.Inputs" Version="31.2.2" />
+  <PackageReference Include="Syncfusion.Maui.Buttons" Version="31.2.2" />
+  <PackageReference Include="Syncfusion.Maui.ListView" Version="31.2.2" />
+   <PackageReference Include="Microsoft.Maui.Controls" Version="*" />
+    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="*" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+    <PackageReference Include="SSH.NET" Version="2020.0.2" />
+    <!-- <PackageReference Include="Syncfusion.Maui.Buttons" Version="20.3.0.57" />
+    <PackageReference Include="Syncfusion.Xamarin.Expander" Version="20.3.0.57" />
+    <PackageReference Include="Syncfusion.Xamarin.SfBusyIndicator" Version="20.3.0.57" />
+    <PackageReference Include="Syncfusion.Xamarin.SfCarousel" Version="20.3.0.57" />
+    <PackageReference Include="Syncfusion.Xamarin.SfChart" Version="20.3.0.57" />
+    <PackageReference Include="Syncfusion.Xamarin.SfListView" Version="20.3.0.57" />
+    <PackageReference Include="Syncfusion.Xamarin.SfMaskedEntry" Version="20.3.0.57" />
+    <PackageReference Include="Syncfusion.Xamarin.SfNumericTextBox" Version="20.3.0.57" />
+    <PackageReference Include="Syncfusion.Xamarin.SfPicker" Version="20.3.0.57" />
+    <PackageReference Include="Syncfusion.Xamarin.SfPopupLayout" Version="20.3.0.57" />
+    <PackageReference Include="Syncfusion.Xamarin.SfRangeSlider" Version="20.3.0.57" />
+    <PackageReference Include="Xam.Plugin.SimpleAudioPlayer" Version="1.6.0" /> -->
+  </ItemGroup>
+</Project>

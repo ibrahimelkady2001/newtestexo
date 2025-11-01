@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "EXOApp": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

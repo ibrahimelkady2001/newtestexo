@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EXOApp.Config"
+             xmlns:models="clr-namespace:EXOApp.Models"
+             xmlns:listview="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+             xmlns:helpers="clr-namespace:EXOApp.Helpers"
+             xmlns:numerictext="http://schemas.syncfusion.com/maui"
+>
+
+    <ContentPage.BindingContext>
+        <models:ConfigViewModel/>
+    </ContentPage.BindingContext>
+
+
+    <ContentPage.Content>
+        <Frame Padding="0">
+            <Frame BackgroundColor="White">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="8*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Frame Grid.Row="0">
+                        <listview:SfListView ItemsSource="{Binding ConfigList}" IsStickyHeader="True" SelectionMode="None" AutoFitMode="DynamicHeight" x:Name="configListView" AllowGroupExpandCollapse="True">
+                            <listview:SfListView.HeaderTemplate>
+                                <DataTemplate>
+                                    <Frame BackgroundColor="{StaticResource PrimaryColour}" Padding="10,0,10,0" Margin="0,0,0,0" CornerRadius="15">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="2*"/>
+                                                <ColumnDefinition Width="0.5*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="0.5*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Label Grid.Column="0" Text="Variable" FontAttributes="Bold"  HorizontalOptions="Start" TextColor="White"/>
+                                            <Label Grid.Column="1" Text="Current Value" FontAttributes="Bold" HorizontalOptions="Center" TextColor="White"/>
+                                            <Label Grid.Column="2" Text="New Value" FontAttributes="Bold" HorizontalOptions="Center" TextColor="White"/>
+                                            <Label Grid.Column="3" Text="Confirm" FontAttributes="Bold" HorizontalOptions="Center" TextColor="White"/>
+                                        </Grid>
+                                    </Frame>
+                                </DataTemplate>
+                            </listview:SfListView.HeaderTemplate>
+                            <listview:SfListView.GroupHeaderTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <ViewCell.View>
+                                            <Frame BackgroundColor="{StaticResource PrimaryColour}" Padding="10,0,10,0" Margin="5,5,5,5" CornerRadius="15">
+                                                <Grid>
+                                                    <Label Text="{Binding Key}" TextColor="White" />
+                                                </Grid>
+                                            </Frame>
+                                        </ViewCell.View>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </listview:SfListView.GroupHeaderTemplate>
+                            <listview:SfListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <ViewCell.View>
+                                            <Frame BackgroundColor="White" Padding="5,0,0,0" Margin="3,3,3,3" CornerRadius="15">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="2*"/>
+                                                        <ColumnDefinition Width="0.5*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="0.5*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Label Grid.Column="0" Text="{Binding DisplayName}" VerticalOptions="Center"/>
+                                                    <Label Grid.Column="1" Text="{Binding CurrentValue}" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                                    <numerictext:SfNumericEntry Grid.Column="2" CustomFormat="{Binding Units}" Value="{Binding EntryValue}" SelectAllOnFocus="True" MaximumNumberDecimalDigits="{Binding Decimals}"/>
+                                                    <Button Grid.Column="3" Text="Confirm" Margin="5,5,5,5" Command="{Binding SettingsChange}"/>
+                                                </Grid>
+                                            </Frame>
+                                        </ViewCell.View>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </listview:SfListView.ItemTemplate>
+                        </listview:SfListView>
+                    </Frame>
+                    <Button Grid.Row="1" Text="Return to Dashboard" HorizontalOptions="Start" Command="{Binding OnExit}"/>
+                    <Button Grid.Row="1" Text="Expand All" x:Name="collapseExpandAll" HorizontalOptions="Center" Clicked="CollapseExpandClick"/>
+                    <StackLayout Grid.Row="1" Orientation="Horizontal" HorizontalOptions="End">
+                        <Frame Padding="10,0,10,0" Margin="0" CornerRadius="15" BackgroundColor="{StaticResource AccentColour}">
+                            <Label Text="{Binding PodLabel}" VerticalOptions="Center" HorizontalOptions="Center" TextColor="{StaticResource PrimaryColour}" FontSize="Large"/>
+                        </Frame>
+                    </StackLayout>
+                </Grid>
+                
+            </Frame>
+        </Frame>
+
+    </ContentPage.Content>
+</ContentPage>
